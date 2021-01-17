@@ -36,15 +36,38 @@ class NotesScreen extends StatelessWidget {
         children: <Widget>[
           Align(
             alignment: Alignment.center,
-            child: Container(
-              width: kIsWeb ? min(kMinWebContainerWidth, width) : null,
-              child: ListView.builder(
-                padding: const EdgeInsets.all(8.0),
-                itemCount: noteList.length,
-                itemBuilder: (BuildContext context, int index) =>
-                    _buildNoteCard(context, noteList[index]),
-              ),
-            ),
+            child: new LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
+              var height = MediaQuery.of(context).size.height;
+              return Container(
+                width: kIsWeb ? min(kMinWebContainerWidth, width) : null,
+                height: constraints.hasInfiniteHeight
+                    ? height
+                    : constraints.maxHeight,
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 140,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        padding: const EdgeInsets.all(8.0),
+                        itemCount: 3,
+                        itemBuilder: (BuildContext context, int index) =>
+                            _buildCategoryCard(context, index.toString()),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.all(8.0),
+                      itemCount: noteList.length,
+                      itemBuilder: (BuildContext context, int index) =>
+                          _buildNoteCard(context, noteList[index]),
+                    ),
+                  ],
+                ),
+              );
+            }),
           ),
         ],
       ),
@@ -52,6 +75,29 @@ class NotesScreen extends StatelessWidget {
         onPressed: () => _navigateToCreateEditPage(context),
         backgroundColor: Color(0xFF757575),
         child: Icon(Icons.add),
+      ),
+    );
+  }
+
+  Widget _buildCategoryCard(BuildContext context, String category) {
+    return Card(
+      elevation: 8.0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: InkWell(
+        onTap: () => {},
+        child: Container(
+          width: 150,
+          height: 100,
+          padding: EdgeInsets.all(10.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(category),
+              Align(alignment: Alignment.center, child: Text('0')),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -88,7 +134,8 @@ class NotesScreen extends StatelessWidget {
         onDismissed: (direction) => onRemove(note.id),
         child: Card(
           elevation: 8.0,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           child: InkWell(
             onTap: () => _navigateToCreateEditPage(context, note: note),
             child: Container(
@@ -102,12 +149,14 @@ class NotesScreen extends StatelessWidget {
                       Text(note.title),
                       Checkbox(
                         value: note.archived,
-                        onChanged: (value) => onArchive(note.id, !note.archived),
+                        onChanged: (value) =>
+                            onArchive(note.id, !note.archived),
                       ),
                     ],
                   ),
                   SizedBox(height: 5),
-                  Align(alignment: Alignment.topLeft, child: Text(note.contents))
+                  Align(
+                      alignment: Alignment.topLeft, child: Text(note.contents))
                 ],
               ),
             ),
