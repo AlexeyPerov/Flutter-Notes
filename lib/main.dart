@@ -1,39 +1,23 @@
+import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
+import 'package:mynotes/redux/app_state_store.dart';
+import 'package:mynotes/screens/notes/notes_connector.dart';
+
+final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
+  NavigateAction.setNavigatorKey(navigatorKey);
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'MyNotes'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Container(),
-    );
-  }
+  Widget build(BuildContext context) => StoreProvider<AppState>(
+    store: store,
+    child: MaterialApp(
+      theme: ThemeData.dark(),
+      home: NotesConnector(),
+      navigatorKey: navigatorKey,
+    ),
+  );
 }
