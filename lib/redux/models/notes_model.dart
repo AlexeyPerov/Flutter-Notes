@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
-import 'package:mynotes/redux/actions/Actions.dart';
+import 'package:mynotes/redux/actions/all_actions.dart';
 
 import '../app_state_store.dart';
 import 'note.dart';
