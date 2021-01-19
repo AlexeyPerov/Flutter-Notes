@@ -1,20 +1,25 @@
 import 'package:async_redux/async_redux.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:mynotes/app/app.dart';
 import 'package:mynotes/redux/models/note.dart';
+import 'package:mynotes/redux/models/note_filter.dart';
+import 'package:mynotes/repositories/notes_repository.dart';
 
 import '../app_state_store.dart';
 
-class QueryAllAction extends ReduxAction<AppState> {
-  QueryAllAction();
+class LoadAction extends ReduxAction<AppState> {
+  LoadAction();
 
   @override
   Future<AppState> reduce() async {
-    List<Note> noteList = [
-      Note(id: '1', title: 'title', contents: 'contents', archived: false),
-      Note(id: '2', title: 'title 2', contents: 'contents 2', archived: false)
-    ];
+    var repository = getIt<NotesRepository>();
+    var categories = await repository.fetchCategories();
+    var selectedCategory = categories[0]; // TODO read from settings
+    var notes = await repository.fetchNotes(selectedCategory.id);
 
-    return state.copy(noteList: noteList);
+    var filter = NoteFilter(category: selectedCategory, noteList: notes);
+    return state.copy(categories: categories, noteFilter: filter);
   }
 }
 
@@ -26,15 +31,15 @@ class AddAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState> reduce() async {
-    var noteList = List<Note>.from(state.noteList);
+    var repository = getIt<NotesRepository>();
+    var selectedCategoryId = state.noteFilter.category.id;
 
-    var id =
-        state.noteList.length > 0 ? int.parse(state.noteList.last.id) + 1 : 1;
+    await repository.addNote(selectedCategoryId,
+        NoteContents(title: title, contents: contents, archived: false));
 
-    noteList.add(Note(
-        id: id.toString(), title: title, contents: contents, archived: false));
-
-    return state.copy(noteList: noteList);
+    var notes = await repository.fetchNotes(selectedCategoryId);
+    var filter = state.noteFilter.copy(noteList: notes);
+    return state.copy(noteFilter: filter);
   }
 }
 
@@ -45,9 +50,30 @@ class RemoveAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState> reduce() async {
-    var noteList = List<Note>.from(state.noteList);
-    noteList.removeWhere((x) => x.id == id);
-    return state.copy(noteList: noteList);
+    var repository = getIt<NotesRepository>();
+    var selectedCategoryId = state.noteFilter.category.id;
+
+    await repository.removeNote(selectedCategoryId, id);
+
+    var notes = await repository.fetchNotes(selectedCategoryId);
+    var filter = state.noteFilter.copy(noteList: notes);
+    return state.copy(noteFilter: filter);
+  }
+}
+
+class FilterAction extends ReduxAction<AppState> {
+  final String categoryId;
+
+  FilterAction({@required this.categoryId});
+
+  @override
+  Future<AppState> reduce() async {
+    var repository = getIt<NotesRepository>();
+    var notes = await repository.fetchNotes(categoryId);
+    var filter = NoteFilter(
+        category: state.categories.firstWhere((x) => x.id == categoryId),
+        noteList: notes);
+    return state.copy(noteFilter: filter);
   }
 }
 
@@ -59,17 +85,14 @@ class ArchiveAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState> reduce() async {
-    var noteList = state.noteList
-        .map<Note>((x) => x.id == this.id
-            ? x = x.copy(
-                id: x.id,
-                title: x.title,
-                contents: x.contents,
-                archived: this.archive)
-            : x)
-        .toList();
+    var repository = getIt<NotesRepository>();
+    var selectedCategoryId = state.noteFilter.category.id;
 
-    return state.copy(noteList: noteList);
+    await repository.archiveNote(selectedCategoryId, id, archive);
+
+    var notes = await repository.fetchNotes(selectedCategoryId);
+    var filter = state.noteFilter.copy(noteList: notes);
+    return state.copy(noteFilter: filter);
   }
 }
 
@@ -83,16 +106,14 @@ class UpdateAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState> reduce() async {
-    var noteList = state.noteList
-        .map<Note>((x) => x.id == this.id
-            ? x = x.copy(
-                id: x.id,
-                title: this.title,
-                contents: this.contents,
-                archived: x.archived)
-            : x)
-        .toList();
+    var repository = getIt<NotesRepository>();
+    var selectedCategoryId = state.noteFilter.category.id;
 
-    return state.copy(noteList: noteList);
+    await repository.updateNote(selectedCategoryId, id,
+        NoteContents(title: title, contents: contents, archived: false));
+
+    var notes = await repository.fetchNotes(selectedCategoryId);
+    var filter = state.noteFilter.copy(noteList: notes);
+    return state.copy(noteFilter: filter);
   }
 }

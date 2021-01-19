@@ -1,13 +1,14 @@
-class Note {
+class Note extends NoteContents {
   final String id;
-  final String title;
-  final String contents;
-  final bool archived;
 
-  Note({this.id, this.title, this.contents, this.archived});
+  Note({this.id, String title, String contents, bool archived})
+      : super(title: title, contents: contents, archived: archived);
 
-  factory Note.initial() =>
-      Note(id: '', title: '', contents: '', archived: false);
+  factory Note.fromContents(String id, NoteContents noteContents) => Note(
+      id: id,
+      title: noteContents.title,
+      contents: noteContents.contents,
+      archived: noteContents.archived);
 
   Note copy({
     String id,
@@ -35,4 +36,15 @@ class Note {
   @override
   int get hashCode =>
       id.hashCode ^ title.hashCode ^ contents.hashCode ^ archived.hashCode;
+}
+
+class NoteContents {
+  final String title;
+  final String contents;
+  final bool archived;
+
+  NoteContents({this.title, this.contents, this.archived});
+
+  factory NoteContents.empty() =>
+      NoteContents(title: '', contents: '', archived: false);
 }

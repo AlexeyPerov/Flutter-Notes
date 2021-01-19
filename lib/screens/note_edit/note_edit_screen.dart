@@ -4,21 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mynotes/app/theme/theme_constants.dart';
 import 'package:mynotes/app/theme/themes.dart';
+import 'package:mynotes/common/utilities/navigator_utilities.dart';
 import 'package:mynotes/redux/models/note.dart';
+import 'package:mynotes/screens/notes/notes_connector.dart';
+import 'package:mynotes/screens/notes/notes_screen.dart';
 
 class NoteEditScreen extends StatefulWidget {
   final Note note;
   final Function(String, String) onCreate;
   final Function(String, String, String) onUpdate;
-  final VoidCallback onPop;
 
-  NoteEditScreen({
-    Key key,
-    this.note,
-    this.onCreate,
-    this.onUpdate,
-    this.onPop,
-  }) : super(key: key);
+  NoteEditScreen({Key key, this.note, this.onCreate, this.onUpdate})
+      : super(key: key);
 
   @override
   _NoteEditScreenState createState() => _NoteEditScreenState();
@@ -68,12 +65,15 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
                   } else {
                     widget.onCreate(_title, _contents);
                   }
-                  widget.onPop();
+
+                  NavigatorUtilities.pushAndRemoveUntil(
+                      context, (context) => NotesConnector());
                 }
               },
               child: Text("SAVE", style: TextStyle(color: Colors.white)),
               key: Key("bt_save"),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
             ),
           ),
         ],

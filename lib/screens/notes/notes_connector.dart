@@ -12,15 +12,16 @@ class NotesConnector extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, NotesModel>(
       model: NotesModel(),
-      onInitialBuild: (viewModel) => viewModel.onQuery(),
+      onInitialBuild: (viewModel) => viewModel.onLoad(),
       builder: (BuildContext context, NotesModel viewModel) => NotesScreen(
-        noteList: viewModel.noteList,
-        onQuery: viewModel.onQuery,
+        categories: viewModel.categories,
+        noteFilter: viewModel.noteFilter,
+        onQuery: viewModel.onLoad,
         onCreate: viewModel.onCreate,
         onUpdate: viewModel.onUpdate,
+        onFilter: viewModel.onFilter,
         onRemove: viewModel.onRemove,
-        onArchive: viewModel.onArchive,
-        onPop: viewModel.onPop,
+        onArchive: viewModel.onArchive
       ),
     );
   }

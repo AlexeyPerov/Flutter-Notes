@@ -20,3 +20,13 @@ AppBarTheme appBarTheme() {
 }
 
 TextStyle primaryTextStyle() => TextStyle(color: kTextColor);
+
+commonBoxShadow() {
+  return BoxShadow(
+      color: Colors.black26, offset: Offset(0, 2), blurRadius: 10.0);
+}
+
+slightBoxShadow() {
+  return BoxShadow(
+      color: Colors.black26, offset: Offset(0, 1), blurRadius: 5.0);
+}

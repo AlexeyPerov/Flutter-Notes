@@ -1,27 +1,32 @@
 import 'package:async_redux/async_redux.dart';
-import 'models/note.dart';
+import 'package:mynotes/redux/models/note_category.dart';
+import 'package:mynotes/redux/models/note_filter.dart';
 
 var store = Store<AppState>(
   initialState: AppState.initialState(),
 );
 
 class AppState {
-  final List<Note> noteList;
+  final List<NoteCategory> categories;
+  final NoteFilter noteFilter;
 
-  AppState({this.noteList});
+  AppState({this.categories, this.noteFilter});
 
-  AppState copy({List<Note> noteList}) =>
-      AppState(noteList: noteList ?? this.noteList);
+  AppState copy({List<NoteCategory> categories, NoteFilter noteFilter}) => AppState(
+      categories: categories ?? this.categories,
+      noteFilter: noteFilter ?? this.noteFilter);
 
-  static AppState initialState() => AppState(noteList: <Note>[]);
+  static AppState initialState() =>
+      AppState(categories: <NoteCategory>[], noteFilter: null);
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is AppState &&
-              runtimeType == other.runtimeType &&
-              noteList == other.noteList;
+      other is AppState &&
+          runtimeType == other.runtimeType &&
+          categories == other.categories &&
+          noteFilter == other.noteFilter;
 
   @override
-  int get hashCode => noteList.hashCode;
+  int get hashCode => categories.hashCode ^ noteFilter.hashCode;
 }

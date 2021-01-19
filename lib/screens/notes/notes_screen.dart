@@ -4,27 +4,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mynotes/app/theme/theme_constants.dart';
 import 'package:mynotes/app/theme/themes.dart';
+import 'package:mynotes/redux/models/note_category.dart';
 import 'package:mynotes/redux/models/note.dart';
+import 'package:mynotes/redux/models/note_filter.dart';
 import 'package:mynotes/screens/note_edit/note_edit_screen.dart';
 
 class NotesScreen extends StatelessWidget {
-  final List<Note> noteList;
+  final List<NoteCategory> categories;
+  final NoteFilter noteFilter;
   final Function() onQuery;
   final Function(String, String) onCreate;
   final Function(String, String, String) onUpdate;
+  final Function(String) onFilter;
   final Function(String) onRemove;
   final Function(String, bool) onArchive;
-  final VoidCallback onPop;
 
   NotesScreen({
     Key key,
-    this.noteList,
+    this.categories,
+    this.noteFilter,
     this.onQuery,
     this.onCreate,
     this.onUpdate,
+    this.onFilter,
     this.onRemove,
-    this.onArchive,
-    this.onPop,
+    this.onArchive
   }) : super(key: key);
 
   @override
@@ -38,6 +42,10 @@ class NotesScreen extends StatelessWidget {
             alignment: Alignment.center,
             child: new LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {
+              if (categories == null || noteFilter == null) {
+                return Container(); // TODO introduce some Loading property
+              }
+
               var height = MediaQuery.of(context).size.height;
               return Container(
                 width: kIsWeb ? min(kMinWebContainerWidth, width) : null,
@@ -51,18 +59,19 @@ class NotesScreen extends StatelessWidget {
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         padding: const EdgeInsets.all(8.0),
-                        itemCount: 3,
+                        itemCount: categories.length,
                         itemBuilder: (BuildContext context, int index) =>
-                            _buildCategoryCard(context, index.toString()),
+                            _buildCategoryCard(context, categories[index],
+                                noteFilter.category == categories[index]),
                       ),
                     ),
                     SizedBox(height: 10),
                     ListView.builder(
                       shrinkWrap: true,
                       padding: const EdgeInsets.all(8.0),
-                      itemCount: noteList.length,
+                      itemCount: noteFilter.noteList.length,
                       itemBuilder: (BuildContext context, int index) =>
-                          _buildNoteCard(context, noteList[index]),
+                          _buildNoteCard(context, noteFilter.noteList[index]),
                     ),
                   ],
                 ),
@@ -79,22 +88,23 @@ class NotesScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCategoryCard(BuildContext context, String category) {
+  Widget _buildCategoryCard(
+      BuildContext context, NoteCategory category, bool selected) {
     return Card(
       elevation: 8.0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: InkWell(
-        onTap: () => {},
+        onTap: () => onFilter(category.id),
         child: Container(
           width: 150,
           height: 100,
+          color: selected ? kPrimaryLightColor : Color(0xFFF5F7FB),
           padding: EdgeInsets.all(10.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(category),
-              Align(alignment: Alignment.center, child: Text('0')),
+              Text(category.name)
             ],
           ),
         ),
@@ -173,8 +183,7 @@ class NotesScreen extends StatelessWidget {
         builder: (context) => NoteEditScreen(
           note: note,
           onCreate: onCreate,
-          onUpdate: onUpdate,
-          onPop: onPop,
+          onUpdate: onUpdate
         ),
       ),
     );

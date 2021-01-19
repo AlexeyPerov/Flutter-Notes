@@ -3,42 +3,47 @@ import 'dart:ui';
 import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:mynotes/redux/actions/all_actions.dart';
+import 'package:mynotes/redux/models/note_category.dart';
+import 'package:mynotes/redux/models/note_filter.dart';
 
 import '../app_state_store.dart';
-import 'note.dart';
 
 class NotesModel extends BaseModel<AppState> {
   NotesModel();
 
-  List<Note> noteList;
-  VoidCallback onQuery;
+  List<NoteCategory> categories;
+  NoteFilter noteFilter;
+    
+  VoidCallback onLoad;
   Function(String, String) onCreate;
   Function(String, String, String) onUpdate;
+  Function(String) onFilter;
   Function(String) onRemove;
   Function(String, bool) onArchive;
-  VoidCallback onPop;
 
   NotesModel.build({
-    @required this.noteList,
-    @required this.onQuery,
+    @required this.categories,
+    @required this.noteFilter,
+    @required this.onLoad,
     @required this.onCreate,
     @required this.onUpdate,
+    @required this.onFilter,
     @required this.onRemove,
-    @required this.onArchive,
-    @required this.onPop,
-  }) : super(equals: [noteList]);
+    @required this.onArchive
+  }) : super(equals: [categories, noteFilter]);
 
   @override
   NotesModel fromStore() => NotesModel.build(
-        noteList: state.noteList,
-        onQuery: () => dispatch(QueryAllAction()),
+        categories: state.categories,
+        noteFilter: state.noteFilter,
+        onLoad: () => dispatch(LoadAction()),
         onCreate: (title, contents) =>
             dispatch(AddAction(title: title, contents: contents)),
         onUpdate: (id, title, contents) =>
             dispatch(UpdateAction(id: id, title: title, contents: contents)),
         onRemove: (id) => dispatch(RemoveAction(id: id)),
+        onFilter: (categoryId) => dispatch(FilterAction(categoryId: categoryId)),
         onArchive: (id, archive) =>
-            dispatch(ArchiveAction(id: id, archive: archive)),
-        onPop: () => dispatch(NavigateAction.pop()),
+            dispatch(ArchiveAction(id: id, archive: archive))
       );
 }
