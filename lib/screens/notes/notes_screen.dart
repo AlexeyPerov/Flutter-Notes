@@ -19,17 +19,17 @@ class NotesScreen extends StatelessWidget {
   final Function(String) onRemove;
   final Function(String, bool) onArchive;
 
-  NotesScreen({
-    Key key,
-    this.categories,
-    this.noteFilter,
-    this.onQuery,
-    this.onCreate,
-    this.onUpdate,
-    this.onFilter,
-    this.onRemove,
-    this.onArchive
-  }) : super(key: key);
+  NotesScreen(
+      {Key key,
+      this.categories,
+      this.noteFilter,
+      this.onQuery,
+      this.onCreate,
+      this.onUpdate,
+      this.onFilter,
+      this.onRemove,
+      this.onArchive})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -57,22 +57,31 @@ class NotesScreen extends StatelessWidget {
                     SizedBox(
                       height: 140,
                       child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        padding: const EdgeInsets.all(8.0),
-                        itemCount: categories.length,
-                        itemBuilder: (BuildContext context, int index) =>
-                            _buildCategoryCard(context, categories[index],
-                                noteFilter.category == categories[index]),
-                      ),
+                          scrollDirection: Axis.horizontal,
+                          padding: const EdgeInsets.all(8.0),
+                          itemCount: categories.length + 1,
+                          itemBuilder: (BuildContext context, int index) {
+                            if (index == categories.length) {
+                              return _buildNewCategoryCard(context);
+                            }
+                            return _buildCategoryCard(
+                                context,
+                                categories[index],
+                                noteFilter.category == categories[index]);
+                          }),
                     ),
                     SizedBox(height: 10),
                     ListView.builder(
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.all(8.0),
-                      itemCount: noteFilter.noteList.length,
-                      itemBuilder: (BuildContext context, int index) =>
-                          _buildNoteCard(context, noteFilter.noteList[index]),
-                    ),
+                        shrinkWrap: true,
+                        padding: const EdgeInsets.all(8.0),
+                        itemCount: noteFilter.noteList.length + 1,
+                        itemBuilder: (BuildContext context, int index) {
+                          if (index == noteFilter.noteList.length) {
+                            return _buildNoteCardNew(context);
+                          }
+                          return _buildNoteCard(
+                              context, noteFilter.noteList[index]);
+                        }),
                   ],
                 ),
               );
@@ -103,9 +112,30 @@ class NotesScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(category.name)
-            ],
+            children: [Text(category.name)],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNewCategoryCard(BuildContext context) {
+    return Card(
+      elevation: 8.0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: InkWell(
+        onTap: () => {
+          // TODO
+        },
+        child: Container(
+          width: 150,
+          height: 100,
+          color: Color(0xFFF5F7FB),
+          padding: EdgeInsets.all(10.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [Text('+')],
           ),
         ),
       ),
@@ -176,15 +206,44 @@ class NotesScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildNoteCardNew(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 18),
+      child: Card(
+        elevation: 8.0,
+        shape:
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        child: InkWell(
+          onTap: () => {},
+          child: Container(
+            height: 120,
+            padding: EdgeInsets.all(10.0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text('+'),
+                  ],
+                ),
+                SizedBox(height: 5),
+                Align(
+                    alignment: Alignment.topLeft, child: Text(''))
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+
   void _navigateToCreateEditPage(BuildContext context, {Note note}) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => NoteEditScreen(
-          note: note,
-          onCreate: onCreate,
-          onUpdate: onUpdate
-        ),
+        builder: (context) =>
+            NoteEditScreen(note: note, onCreate: onCreate, onUpdate: onUpdate),
       ),
     );
   }

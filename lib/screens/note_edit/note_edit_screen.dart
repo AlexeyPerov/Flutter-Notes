@@ -7,7 +7,6 @@ import 'package:mynotes/app/theme/themes.dart';
 import 'package:mynotes/common/utilities/navigator_utilities.dart';
 import 'package:mynotes/redux/models/note.dart';
 import 'package:mynotes/screens/notes/notes_connector.dart';
-import 'package:mynotes/screens/notes/notes_screen.dart';
 
 class NoteEditScreen extends StatefulWidget {
   final Note note;
