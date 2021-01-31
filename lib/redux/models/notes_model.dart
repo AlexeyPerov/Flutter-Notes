@@ -13,37 +13,39 @@ class NotesModel extends BaseModel<AppState> {
 
   List<NoteCategory> categories;
   NoteFilter noteFilter;
-    
+
   VoidCallback onLoad;
-  Function(String, String) onCreate;
+  Function(String) onAddCategory;
+  Function(String, String) onAddNote;
   Function(String, String, String) onUpdate;
   Function(String) onFilter;
   Function(String) onRemove;
   Function(String, bool) onArchive;
 
-  NotesModel.build({
-    @required this.categories,
-    @required this.noteFilter,
-    @required this.onLoad,
-    @required this.onCreate,
-    @required this.onUpdate,
-    @required this.onFilter,
-    @required this.onRemove,
-    @required this.onArchive
-  }) : super(equals: [categories, noteFilter]);
+  NotesModel.build(
+      {@required this.categories,
+      @required this.noteFilter,
+      @required this.onLoad,
+      @required this.onAddCategory,
+      @required this.onAddNote,
+      @required this.onUpdate,
+      @required this.onFilter,
+      @required this.onRemove,
+      @required this.onArchive})
+      : super(equals: [categories, noteFilter]);
 
   @override
   NotesModel fromStore() => NotesModel.build(
-        categories: state.categories,
-        noteFilter: state.noteFilter,
-        onLoad: () => dispatch(LoadAction()),
-        onCreate: (title, contents) =>
-            dispatch(AddAction(title: title, contents: contents)),
-        onUpdate: (id, title, contents) =>
-            dispatch(UpdateAction(id: id, title: title, contents: contents)),
-        onRemove: (id) => dispatch(RemoveAction(id: id)),
-        onFilter: (categoryId) => dispatch(FilterAction(categoryId: categoryId)),
-        onArchive: (id, archive) =>
-            dispatch(ArchiveAction(id: id, archive: archive))
-      );
+      categories: state.categories,
+      noteFilter: state.noteFilter,
+      onLoad: () => dispatch(LoadAction()),
+      onAddCategory: (title) async => dispatchFuture(AddCategoryAction(title: title)),
+      onAddNote: (title, contents) =>
+          dispatch(AddNoteAction(title: title, contents: contents)),
+      onUpdate: (id, title, contents) =>
+          dispatch(UpdateAction(id: id, title: title, contents: contents)),
+      onRemove: (id) => dispatch(RemoveAction(id: id)),
+      onFilter: (categoryId) => dispatch(FilterAction(categoryId: categoryId)),
+      onArchive: (id, archive) =>
+          dispatch(ArchiveAction(id: id, archive: archive)));
 }

@@ -30,3 +30,16 @@ slightBoxShadow() {
   return BoxShadow(
       color: Colors.black26, offset: Offset(0, 1), blurRadius: 5.0);
 }
+
+InputDecoration textFieldStyle({String helperText = ''}) {
+  return InputDecoration(
+    contentPadding: EdgeInsets.all(12),
+    helperText: helperText,
+    focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(color: Colors.grey[500])),
+    enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(color: Colors.grey[300])),
+  );
+}

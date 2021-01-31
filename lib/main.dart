@@ -22,7 +22,6 @@ class AppWidget extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Notes',
       theme: theme(),
-      // home: NotesConnector(),
       onGenerateRoute: _generateRoute,
     ),
   );

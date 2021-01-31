@@ -9,11 +9,14 @@ import 'package:mynotes/redux/models/note.dart';
 import 'package:mynotes/redux/models/note_filter.dart';
 import 'package:mynotes/screens/note_edit/note_edit_screen.dart';
 
+import 'components/add_new_category_card.dart';
+
 class NotesScreen extends StatelessWidget {
   final List<NoteCategory> categories;
   final NoteFilter noteFilter;
   final Function() onQuery;
-  final Function(String, String) onCreate;
+  final Function(String) onAddCategory;
+  final Function(String, String) onAddNote;
   final Function(String, String, String) onUpdate;
   final Function(String) onFilter;
   final Function(String) onRemove;
@@ -24,7 +27,8 @@ class NotesScreen extends StatelessWidget {
       this.categories,
       this.noteFilter,
       this.onQuery,
-      this.onCreate,
+      this.onAddCategory,
+      this.onAddNote,
       this.onUpdate,
       this.onFilter,
       this.onRemove,
@@ -62,7 +66,8 @@ class NotesScreen extends StatelessWidget {
                           itemCount: categories.length + 1,
                           itemBuilder: (BuildContext context, int index) {
                             if (index == categories.length) {
-                              return _buildNewCategoryCard(context);
+                              return AddNewCategoryCard(
+                                  onAddCategory: onAddCategory);
                             }
                             return _buildCategoryCard(
                                 context,
@@ -113,29 +118,6 @@ class NotesScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [Text(category.name)],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildNewCategoryCard(BuildContext context) {
-    return Card(
-      elevation: 8.0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      child: InkWell(
-        onTap: () => {
-          // TODO
-        },
-        child: Container(
-          width: 150,
-          height: 100,
-          color: Color(0xFFF5F7FB),
-          padding: EdgeInsets.all(10.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [Text('+')],
           ),
         ),
       ),
@@ -211,8 +193,7 @@ class NotesScreen extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 18),
       child: Card(
         elevation: 8.0,
-        shape:
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: InkWell(
           onTap: () => {},
           child: Container(
@@ -227,8 +208,7 @@ class NotesScreen extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 5),
-                Align(
-                    alignment: Alignment.topLeft, child: Text(''))
+                Align(alignment: Alignment.topLeft, child: Text(''))
               ],
             ),
           ),
@@ -237,14 +217,14 @@ class NotesScreen extends StatelessWidget {
     );
   }
 
-
   void _navigateToCreateEditPage(BuildContext context, {Note note}) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) =>
-            NoteEditScreen(note: note, onCreate: onCreate, onUpdate: onUpdate),
+            NoteEditScreen(note: note, onCreate: onAddNote, onUpdate: onUpdate),
       ),
     );
   }
 }
+

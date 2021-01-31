@@ -23,11 +23,11 @@ class LoadAction extends ReduxAction<AppState> {
   }
 }
 
-class AddAction extends ReduxAction<AppState> {
+class AddNoteAction extends ReduxAction<AppState> {
   final String title;
   final String contents;
 
-  AddAction({@required this.title, @required this.contents});
+  AddNoteAction({@required this.title, @required this.contents});
 
   @override
   Future<AppState> reduce() async {
@@ -40,6 +40,22 @@ class AddAction extends ReduxAction<AppState> {
     var notes = await repository.fetchNotes(selectedCategoryId);
     var filter = state.noteFilter.copy(noteList: notes);
     return state.copy(noteFilter: filter);
+  }
+}
+
+class AddCategoryAction extends ReduxAction<AppState> {
+  final String title;
+
+  AddCategoryAction({@required this.title});
+
+  @override
+  Future<AppState> reduce() async {
+    var repository = getIt<NotesRepository>();
+
+    await repository.addCategory(title);
+
+    var categories = await repository.fetchCategories();
+    return state.copy(categories: categories.toList());
   }
 }
 
