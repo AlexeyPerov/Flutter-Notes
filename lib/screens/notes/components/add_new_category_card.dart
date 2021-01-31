@@ -38,11 +38,14 @@ class _AddNewCategoryCardState extends State<AddNewCategoryCard> {
 
     return Card(
       elevation: 8.0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      color: Color(0xFFF5F7FB),
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: Colors.white70, width: 1),
+        borderRadius: BorderRadius.circular(20),
+      ),
       child: Container(
         width: 150,
         height: 100,
-        color: Color(0xFFF5F7FB),
         padding: EdgeInsets.all(10.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

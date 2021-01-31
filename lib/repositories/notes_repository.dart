@@ -44,7 +44,7 @@ class InMemoryNotesRepository extends NotesRepository {
     var newId = categoryId.toString();
     categories.add(NoteCategory(id: newId, name: name));
     notes[newId] = List.empty(growable: true);
-    await Future.delayed(new Duration(milliseconds: 1000));
+    await Future.delayed(new Duration(milliseconds: 300));
   }
 
   @override

@@ -40,8 +40,8 @@ class NotesModel extends BaseModel<AppState> {
       noteFilter: state.noteFilter,
       onLoad: () => dispatch(LoadAction()),
       onAddCategory: (title) async => dispatchFuture(AddCategoryAction(title: title)),
-      onAddNote: (title, contents) =>
-          dispatch(AddNoteAction(title: title, contents: contents)),
+      onAddNote: (title, contents) async =>
+          dispatchFuture(AddNoteAction(title: title, contents: contents)),
       onUpdate: (id, title, contents) =>
           dispatch(UpdateAction(id: id, title: title, contents: contents)),
       onRemove: (id) => dispatch(RemoveAction(id: id)),
