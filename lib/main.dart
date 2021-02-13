@@ -8,6 +8,7 @@ import 'package:mynotes/app/options/notes_options.dart';
 import 'package:mynotes/app/theme/theme_constants.dart';
 import 'package:mynotes/app/theme/themes.dart';
 import 'package:mynotes/redux/app_state_store.dart';
+import 'package:mynotes/screens/error/error_screen.dart';
 import 'package:mynotes/screens/notes/notes_connector.dart';
 import 'package:mynotes/common/utilities/routing/routing_extensions.dart';
 
@@ -60,7 +61,7 @@ class AppWidget extends StatelessWidget {
       future: _appInitialization,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return Container(); // TODO error screen
+          return ErrorScreen();
         }
 
         if (snapshot.connectionState == ConnectionState.done) {
@@ -75,9 +76,10 @@ class AppWidget extends StatelessWidget {
   Route<dynamic> _generateRoute(RouteSettings settings) {
     var routingData = settings.name.getRoutingData;
     switch (routingData.route) {
-      case '/new':
-        // TODO
-        break;
+      case '/error':
+        return MaterialPageRoute(
+          builder: (context) => _redirectOnAppInit(() => ErrorScreen()),
+        );
     }
 
     return MaterialPageRoute(
