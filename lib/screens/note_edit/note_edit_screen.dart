@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mynotes/app/theme/theme_constants.dart';
-import 'package:mynotes/app/theme/themes.dart';
 import 'package:mynotes/common/utilities/navigator_utilities.dart';
 import 'package:mynotes/redux/models/note.dart';
 import 'package:mynotes/screens/notes/notes_connector.dart';
@@ -42,39 +41,19 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          hoverColor: Colors.white,
-          highlightColor: Colors.white,
+          icon: Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: Text('Note', style: primaryTitleTextStyle()),
         actions: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: FlatButton(
-              color: kTextColor,
-              onPressed: () {
-                if (_validateAndSave()) {
-                  if (widget.note != null && widget.note.id.isNotEmpty) {
-                    widget.onUpdate(
-                      widget.note.id,
-                      _title,
-                      _contents,
-                    );
-                  } else {
-                    widget.onCreate(_title, _contents);
-                  }
-
-                  NavigatorUtilities.pushAndRemoveUntil(
-                      context, (context) => NotesConnector());
-                }
-              },
-              child: Text("SAVE", style: TextStyle(color: Colors.white)),
-              key: Key("bt_save"),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-            ),
-          ),
+              padding: const EdgeInsets.all(8.0),
+              child: IconButton(
+                icon: const Icon(Icons.add),
+                tooltip: "Add",
+                onPressed: () async => {
+                  savePressed()
+                },
+              )),
         ],
       ),
       body: Align(
@@ -110,5 +89,22 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
         ),
       ),
     );
+  }
+
+  savePressed() {
+    if (_validateAndSave()) {
+      if (widget.note != null && widget.note.id.isNotEmpty) {
+        widget.onUpdate(
+          widget.note.id,
+          _title,
+          _contents,
+        );
+      } else {
+        widget.onCreate(_title, _contents);
+      }
+
+      NavigatorUtilities.pushAndRemoveUntil(
+          context, (context) => NotesConnector());
+    }
   }
 }

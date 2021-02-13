@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mynotes/app/theme/theme_constants.dart';
-import 'package:mynotes/app/theme/themes.dart';
 import 'package:mynotes/redux/models/note_category.dart';
 import 'package:mynotes/redux/models/note.dart';
 import 'package:mynotes/redux/models/note_filter.dart';
@@ -42,7 +41,7 @@ class NotesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(title: Text('Notes', style: primaryTitleTextStyle())),
+      appBar: AppBar(),
       body: Stack(
         children: <Widget>[
           Align(

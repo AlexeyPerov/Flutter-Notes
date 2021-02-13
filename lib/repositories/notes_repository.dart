@@ -19,18 +19,30 @@ class InMemoryNotesRepository extends NotesRepository {
   int categoryId = 2;
 
   List<NoteCategory> categories = [
-    NoteCategory(id: '0', name: 'All'),
-    NoteCategory(id: '1', name: 'Job'),
-    NoteCategory(id: '2', name: 'Random')
+    NoteCategory(id: '0', name: 'Category 1'),
+    NoteCategory(id: '1', name: 'Category 2'),
+    NoteCategory(id: '2', name: 'Category 3')
   ];
 
   var notes = <String, List<Note>>{
     '0': [
-      Note(id: '0', title: 'title', contents: 'contents', archived: false),
-      Note(id: '1', title: 'title 1', contents: 'contents 1', archived: false)
+      Note(
+          id: '0',
+          title: 'Do or learn something 1',
+          contents: 'and don\'t forget to archive it later',
+          archived: false),
+      Note(
+          id: '1',
+          title: 'Do or learn something 2',
+          contents: 'and don\'t forget to delete it later',
+          archived: false)
     ],
     '1': [
-      Note(id: '3', title: 'title 2', contents: 'contents 2', archived: false)
+      Note(
+          id: '3',
+          title: 'Do or learn something 3',
+          contents: 'and don\'t forget to reopen it later',
+          archived: false)
     ],
     '2': []
   };

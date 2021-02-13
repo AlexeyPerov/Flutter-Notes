@@ -19,6 +19,9 @@ class NoteCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 18),
       child: Dismissible(
@@ -57,13 +60,18 @@ class NoteCard extends StatelessWidget {
             onTap: () => onNavigateToEditScreen(context, note),
             child: Container(
               height: 120,
-              padding: EdgeInsets.all(10.0),
+              padding: EdgeInsets.all(25.0),
               child: Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text(note.title),
+                      Text(note.title,
+                          style: textTheme.headline6.apply(
+                              color: colorScheme.onSurface,
+                              decoration: note.archived
+                                  ? TextDecoration.lineThrough
+                                  : TextDecoration.none)),
                       Checkbox(
                         value: note.archived,
                         onChanged: (value) =>
@@ -73,7 +81,13 @@ class NoteCard extends StatelessWidget {
                   ),
                   SizedBox(height: 5),
                   Align(
-                      alignment: Alignment.topLeft, child: Text(note.contents))
+                      alignment: Alignment.topLeft,
+                      child: Text(note.contents,
+                          style: textTheme.bodyText2.apply(
+                              color: colorScheme.onSurface,
+                              decoration: note.archived
+                                  ? TextDecoration.lineThrough
+                                  : TextDecoration.none)))
                 ],
               ),
             ),

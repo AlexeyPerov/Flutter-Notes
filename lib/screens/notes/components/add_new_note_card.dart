@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mynotes/app/theme/theme_constants.dart';
-import 'package:mynotes/app/theme/themes.dart';
 import 'package:mynotes/common/widgets/conditional_widget.dart';
 
 class AddNewNoteCard extends StatefulWidget {
@@ -38,7 +36,6 @@ class _AddNewNoteCardState extends State<AddNewNoteCard> {
       child: Card(
         clipBehavior: Clip.antiAlias,
         elevation: 8.0,
-        color: kPrimaryMediumColor,
         shape: RoundedRectangleBorder(
           side: BorderSide(color: Colors.white70, width: 1),
           borderRadius: BorderRadius.circular(20),
@@ -46,58 +43,49 @@ class _AddNewNoteCardState extends State<AddNewNoteCard> {
         child: InkWell(
           onTap: () => {},
           child: Container(
-            height: 150,
+            height: 175,
             padding: EdgeInsets.all(10.0),
             child: Column(
               children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        autocorrect: false,
-                        controller: _titleController,
-                        maxLines: 1,
-                        decoration: textFieldStyle(helperText: null),
-                        onChanged: (v) => {
-                          setState(() {
-                            buttonEnabled =
-                                v.isNotEmpty && _contentsController.text.isNotEmpty;
-                          })
-                        },
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    ConditionalWidget(
-                      fallback: Container(width: 200),
-                        child: FlatButton(
-                            child: Text('Add'),
-                            color: Colors.blue,
-                            textColor: Colors.white,
-                            splashColor: Colors.blueAccent,
-                            onPressed: () async => {
-                              if (_titleController.text.isNotEmpty &&
-                                  _contentsController.text.isNotEmpty)
-                                {
-                                  await createNote(_titleController.text,
-                                      _contentsController.text)
-                                }
-                            }),
-                        condition: buttonEnabled)
-                  ],
-                ),
-                SizedBox(height: 5),
                 TextFormField(
                   autocorrect: false,
-                  controller: _contentsController,
-                  maxLines: 3,
-                  decoration: textFieldStyle(helperText: null),
+                  controller: _titleController,
+                  maxLines: 1,
                   onChanged: (v) => {
                     setState(() {
-                      buttonEnabled =
-                          v.isNotEmpty && _titleController.text.isNotEmpty;
+                      buttonEnabled = v.isNotEmpty;
                     })
                   },
                 ),
+                SizedBox(height: 5),
+                ConditionalWidget(
+                    fallback: Container(width: 200),
+                    child: TextFormField(
+                      autocorrect: false,
+                      controller: _contentsController,
+                      maxLines: 2,
+                      onChanged: (v) => {
+                        setState(() {
+                          buttonEnabled =
+                              v.isNotEmpty && _titleController.text.isNotEmpty;
+                        })
+                      },
+                    ),
+                    condition: buttonEnabled),
+                ConditionalWidget(
+                    fallback: Container(width: 200),
+                    child: IconButton(
+                      icon: const Icon(Icons.add),
+                      tooltip: "Add",
+                      onPressed: () async => {
+                        if (_titleController.text.isNotEmpty)
+                          {
+                            await createNote(
+                                _titleController.text, _contentsController.text)
+                          }
+                      },
+                    ),
+                    condition: buttonEnabled)
               ],
             ),
           ),
