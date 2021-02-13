@@ -2,11 +2,7 @@ import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as pathProvider;
 import 'package:flutter/foundation.dart' show kIsWeb;
 
-abstract class SettingsRepository {
-  Future initialize();
-  String get(String key, {String defaultValue = ''});
-  void put(String key, String value);
-}
+import 'settings_repository.dart';
 
 class HiveSettingsRepository extends SettingsRepository {
   final String _boxName = 'settings';

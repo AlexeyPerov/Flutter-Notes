@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mynotes/app/app.dart';
 import 'package:mynotes/redux/models/note.dart';
 import 'package:mynotes/redux/models/note_filter.dart';
-import 'package:mynotes/repositories/notes_repository.dart';
+import 'package:mynotes/repositories/notes/notes_repository.dart';
 
 import '../app_state_store.dart';
 

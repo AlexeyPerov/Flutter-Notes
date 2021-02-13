@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mynotes/repositories/notes_repository.dart';
-import 'package:mynotes/repositories/settings_repository.dart';
+import 'package:mynotes/repositories/notes/mock_notes_repository.dart';
+import 'package:mynotes/repositories/notes/notes_repository.dart';
+import 'package:mynotes/repositories/settings/hive_settings_repository.dart';
+import 'package:mynotes/repositories/settings/settings_repository.dart';
 
 GetIt getIt = GetIt.instance;
 
@@ -15,7 +17,7 @@ class App {
 
     await getIt.get<SettingsRepository>().initialize();
 
-    getIt.registerSingleton<NotesRepository>(InMemoryNotesRepository(),
+    getIt.registerSingleton<NotesRepository>(MockNotesRepository(),
         signalsReady: true);
 
     getIt<NotesRepository>().initialize();
