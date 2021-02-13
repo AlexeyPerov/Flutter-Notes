@@ -19,7 +19,8 @@ AppBarTheme appBarTheme() {
   return AppBarTheme(color: Colors.white, shadowColor: Colors.white);
 }
 
-TextStyle primaryTextStyle() => TextStyle(color: kTextColor);
+TextStyle primaryTitleTextStyle({double size = 24}) =>
+    TextStyle(color: kTextColor, fontSize: size);
 
 commonBoxShadow() {
   return BoxShadow(
@@ -36,10 +37,8 @@ InputDecoration textFieldStyle({String helperText = ''}) {
     contentPadding: EdgeInsets.all(12),
     helperText: helperText,
     focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: Colors.grey[500])),
+        borderSide: BorderSide(color: kPrimaryLightColor)),
     enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: Colors.grey[300])),
+        borderSide: BorderSide(color: kPrimaryLightColor)),
   );
 }

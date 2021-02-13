@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:mynotes/app/theme/theme_constants.dart';
 import 'package:mynotes/app/theme/themes.dart';
 import 'package:mynotes/common/widgets/conditional_widget.dart';
 
@@ -37,8 +38,9 @@ class _AddNewCategoryCardState extends State<AddNewCategoryCard> {
           ));
 
     return Card(
+      clipBehavior: Clip.antiAlias,
       elevation: 8.0,
-      color: Color(0xFFF5F7FB),
+      color: kPrimaryMediumColor,
       shape: RoundedRectangleBorder(
         side: BorderSide(color: Colors.white70, width: 1),
         borderRadius: BorderRadius.circular(20),

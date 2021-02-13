@@ -47,7 +47,7 @@ class _NoteEditScreenState extends State<NoteEditScreen> {
           highlightColor: Colors.white,
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: Text('Note', style: primaryTextStyle()),
+        title: Text('Note', style: primaryTitleTextStyle()),
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.all(8.0),

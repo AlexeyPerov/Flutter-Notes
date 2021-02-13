@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:mynotes/app/theme/theme_constants.dart';
 import 'package:mynotes/redux/models/note.dart';
 
 class NoteCard extends StatelessWidget {
@@ -25,7 +26,7 @@ class NoteCard extends StatelessWidget {
         background: Card(
           elevation: 8.0,
           child: Container(
-            color: Colors.red[300],
+            color: kPrimaryColor,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.end,
@@ -48,6 +49,7 @@ class NoteCard extends StatelessWidget {
         key: Key(UniqueKey().toString()),
         onDismissed: (direction) => onRemove(note.id),
         child: Card(
+          clipBehavior: Clip.antiAlias,
           elevation: 8.0,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),

@@ -42,7 +42,7 @@ class NotesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(title: Text('Notes', style: primaryTextStyle())),
+      appBar: AppBar(title: Text('Notes', style: primaryTitleTextStyle())),
       body: Stack(
         children: <Widget>[
           Align(

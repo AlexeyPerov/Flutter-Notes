@@ -36,8 +36,9 @@ class _AddNewNoteCardState extends State<AddNewNoteCard> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 18),
       child: Card(
+        clipBehavior: Clip.antiAlias,
         elevation: 8.0,
-        color: kPrimaryLightColor,
+        color: kPrimaryMediumColor,
         shape: RoundedRectangleBorder(
           side: BorderSide(color: Colors.white70, width: 1),
           borderRadius: BorderRadius.circular(20),
@@ -65,13 +66,13 @@ class _AddNewNoteCardState extends State<AddNewNoteCard> {
                         },
                       ),
                     ),
+                    SizedBox(width: 10),
                     ConditionalWidget(
                       fallback: Container(width: 200),
                         child: FlatButton(
                             child: Text('Add'),
                             color: Colors.blue,
                             textColor: Colors.white,
-                            padding: EdgeInsets.all(8.0),
                             splashColor: Colors.blueAccent,
                             onPressed: () async => {
                               if (_titleController.text.isNotEmpty &&

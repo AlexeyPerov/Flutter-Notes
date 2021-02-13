@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mynotes/app/theme/theme_constants.dart';
+import 'package:mynotes/app/theme/themes.dart';
 
 class CategoryCard extends StatelessWidget {
   final Function(String) onFilter;
@@ -15,10 +16,10 @@ class CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      clipBehavior: Clip.antiAlias,
       elevation: 8.0,
       color: selected ? kPrimaryLightColor : Color(0xFFF5F7FB),
       shape: RoundedRectangleBorder(
-        side: BorderSide(color: Colors.white70, width: 1),
         borderRadius: BorderRadius.circular(20),
       ),
       child: InkWell(
@@ -30,7 +31,7 @@ class CategoryCard extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [Text(name)],
+            children: [Text(name, style: primaryTitleTextStyle())],
           ),
         ),
       ),
