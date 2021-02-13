@@ -20,7 +20,7 @@ class App {
     getIt.registerSingleton<NotesRepository>(MockNotesRepository(),
         signalsReady: true);
 
-    getIt<NotesRepository>().initialize();
+    await getIt<NotesRepository>().initialize();
   }
 
   static void initializeLogging() {}

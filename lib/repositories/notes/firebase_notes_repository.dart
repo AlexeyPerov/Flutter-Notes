@@ -6,7 +6,8 @@ import 'package:mynotes/redux/models/note_category.dart';
 import 'notes_repository.dart';
 
 /*class FirestoreNotesRepository extends NotesRepository {
-  @override
-  void initialize() {
+   @override
+  Future initialize() async {
+    await Future.delayed(new Duration(milliseconds: 300));
   }
 }*/

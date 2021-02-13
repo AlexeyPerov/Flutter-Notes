@@ -8,9 +8,10 @@ import 'package:mynotes/app/options/notes_options.dart';
 import 'package:mynotes/app/theme/theme_constants.dart';
 import 'package:mynotes/app/theme/themes.dart';
 import 'package:mynotes/redux/app_state_store.dart';
+import 'package:mynotes/screens/auth/auth_screen.dart';
 import 'package:mynotes/screens/error/error_screen.dart';
-import 'package:mynotes/screens/notes/notes_connector.dart';
 import 'package:mynotes/common/utilities/routing/routing_extensions.dart';
+import 'package:mynotes/screens/splash/splash_screen.dart';
 
 void main() {
   GoogleFonts.config.allowRuntimeFetching = true;
@@ -68,7 +69,7 @@ class AppWidget extends StatelessWidget {
           return routeTo();
         }
 
-        return Container(); // TODO splash screen
+        return SplashScreen();
       },
     );
   }
@@ -80,10 +81,14 @@ class AppWidget extends StatelessWidget {
         return MaterialPageRoute(
           builder: (context) => _redirectOnAppInit(() => ErrorScreen()),
         );
+      case '/auth':
+        return MaterialPageRoute(
+          builder: (context) => _redirectOnAppInit(() => AuthScreen()),
+        );
     }
 
     return MaterialPageRoute(
-      builder: (context) => _redirectOnAppInit(() => NotesConnector()),
+      builder: (context) => _redirectOnAppInit(() => AuthScreen()),
     );
   }
 }

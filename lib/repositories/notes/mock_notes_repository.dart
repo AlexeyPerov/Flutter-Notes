@@ -39,7 +39,9 @@ class MockNotesRepository extends NotesRepository {
   };
 
   @override
-  void initialize() {}
+  Future initialize() async {
+    await Future.delayed(new Duration(milliseconds: 300));
+  }
 
   @override
   Future addCategory(String name) async {

@@ -4,7 +4,7 @@ import 'package:mynotes/redux/models/note.dart';
 import 'package:mynotes/redux/models/note_category.dart';
 
 abstract class NotesRepository {
-  void initialize();
+  Future initialize();
   Future<List<NoteCategory>> fetchCategories();
   Future addCategory(String name);
   Future<List<Note>> fetchNotes(String categoryId);

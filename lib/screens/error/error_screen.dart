@@ -12,6 +12,7 @@ class ErrorScreen extends StatelessWidget {
 
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
+        appBar: AppBar(),
         body: Stack(
           children: <Widget>[
             Align(
@@ -26,7 +27,7 @@ class ErrorScreen extends StatelessWidget {
                       : constraints.maxHeight,
                   child: Align(
                     alignment: Alignment.center,
-                    child: Text("Something went wrong",
+                    child: Text("#error",
                         style: textTheme.headline1
                             .apply(color: colorScheme.onSurface)),
                   ),
