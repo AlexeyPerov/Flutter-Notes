@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mynotes/repositories/notes/firebase_notes_repository.dart';
 import 'package:mynotes/repositories/notes/mock_notes_repository.dart';
 import 'package:mynotes/repositories/notes/notes_repository.dart';
 import 'package:mynotes/repositories/settings/hive_settings_repository.dart';
@@ -17,7 +19,9 @@ class App {
 
     await getIt.get<SettingsRepository>().initialize();
 
-    getIt.registerSingleton<NotesRepository>(MockNotesRepository(),
+    // TODO Firestore added only for Web now
+    getIt.registerSingleton<NotesRepository>(
+        kIsWeb ? FirestoreNotesRepository() : MockNotesRepository(),
         signalsReady: true);
 
     await getIt<NotesRepository>().initialize();
