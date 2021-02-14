@@ -16,7 +16,6 @@ Uses Async Redux (https://pub.dev/packages/async_redux) as a state management ap
 
 ### Setup it up in your project
 
-in log_keep:
 * add google-services.json for Android
 * add GoogleService-Info.plist for iOS
 * add firebaseConfig.js near index.html which should contain code like this:
