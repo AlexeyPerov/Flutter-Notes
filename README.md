@@ -9,4 +9,4 @@ Uses Async Redux (https://pub.dev/packages/async_redux) as a state management ap
 TODO:
 - Add and init Firebase projects for Android/iOS)
 - Add Firebase auth
-- Сode/decode database entities directly to Dart classes
+- Serialize/deserialize database entities directly to/from Dart classes
