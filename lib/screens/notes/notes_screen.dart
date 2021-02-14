@@ -52,12 +52,13 @@ class NotesScreen extends StatelessWidget {
                 return Container();
               }
 
-              var height = MediaQuery.of(context).size.height;
+              var height = constraints.hasInfiniteHeight
+                  ? MediaQuery.of(context).size.height
+                  : constraints.maxHeight;
+
               return Container(
                 width: kIsWeb ? min(kMinWebContainerWidth, width) : null,
-                height: constraints.hasInfiniteHeight
-                    ? height
-                    : constraints.maxHeight,
+                height: height,
                 child: Column(
                   children: [
                     SizedBox(
@@ -80,20 +81,23 @@ class NotesScreen extends StatelessWidget {
                           }),
                     ),
                     SizedBox(height: 10),
-                    ListView.builder(
-                        shrinkWrap: true,
-                        padding: const EdgeInsets.all(8.0),
-                        itemCount: noteFilter.noteList.length + 1,
-                        itemBuilder: (BuildContext context, int index) {
-                          if (index == noteFilter.noteList.length) {
-                            return AddNewNoteCard(onAddNote: onAddNote);
-                          }
-                          return NoteCard(
-                              note: noteFilter.noteList[index],
-                              onRemove: onRemove,
-                              onArchive: onArchive,
-                              onNavigateToEditScreen: _navigateToNoteEditPage);
-                        }),
+                    Container(
+                      height: height - 150,
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          padding: const EdgeInsets.all(8.0),
+                          itemCount: noteFilter.noteList.length + 1,
+                          itemBuilder: (BuildContext context, int index) {
+                            if (index == noteFilter.noteList.length) {
+                              return AddNewNoteCard(onAddNote: onAddNote);
+                            }
+                            return NoteCard(
+                                note: noteFilter.noteList[index],
+                                onRemove: onRemove,
+                                onArchive: onArchive,
+                                onNavigateToEditScreen: _navigateToNoteEditPage);
+                          }),
+                    ),
                   ],
                 ),
               );

@@ -66,12 +66,15 @@ class NoteCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text(note.title,
-                          style: textTheme.headline6.apply(
-                              color: colorScheme.onSurface,
-                              decoration: note.archived
-                                  ? TextDecoration.lineThrough
-                                  : TextDecoration.none)),
+                      Expanded(
+                        child: Text(note.title,
+                            overflow: TextOverflow.ellipsis,
+                            style: textTheme.headline6.apply(
+                                color: colorScheme.onSurface,
+                                decoration: note.archived
+                                    ? TextDecoration.lineThrough
+                                    : TextDecoration.none)),
+                      ),
                       Checkbox(
                         value: note.archived,
                         onChanged: (value) =>
@@ -83,6 +86,7 @@ class NoteCard extends StatelessWidget {
                   Align(
                       alignment: Alignment.topLeft,
                       child: Text(note.contents,
+                          overflow: TextOverflow.ellipsis,
                           style: textTheme.bodyText2.apply(
                               color: colorScheme.onSurface,
                               decoration: note.archived

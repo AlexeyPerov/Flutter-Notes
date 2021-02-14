@@ -11,6 +11,7 @@ import 'package:mynotes/redux/app_state_store.dart';
 import 'package:mynotes/screens/auth/auth_screen.dart';
 import 'package:mynotes/screens/error/error_screen.dart';
 import 'package:mynotes/common/utilities/routing/routing_extensions.dart';
+import 'package:mynotes/screens/notes/notes_connector.dart';
 import 'package:mynotes/screens/splash/splash_screen.dart';
 
 void main() {
@@ -88,7 +89,8 @@ class AppWidget extends StatelessWidget {
     }
 
     return MaterialPageRoute(
-      builder: (context) => _redirectOnAppInit(() => AuthScreen()),
+      builder: (context) => _redirectOnAppInit(
+          () => kReleaseMode ? AuthScreen() : NotesConnector()),
     );
   }
 }

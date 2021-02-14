@@ -20,7 +20,7 @@ class CategoryCard extends StatelessWidget {
     return Card(
       clipBehavior: Clip.antiAlias,
       elevation: 8.0,
-      color: selected ? kPrimaryLightColor : colorScheme.primaryVariant,
+      color: selected ? colorScheme.primary : null,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),

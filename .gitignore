@@ -137,5 +137,3 @@ app.*.symbols
 # Firebase
 **/.firebase/**
 **/.firebaserc
-# better ignore this locally
-**/firebaseConfig.js 

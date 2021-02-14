@@ -19,14 +19,31 @@ class MockNotesRepository extends NotesRepository {
     '0': [
       Note(
           id: '0',
-          title: 'Do or learn something 1',
-          contents: 'and don\'t forget to archive it later',
+          title: 'Suspendisse sed nisi lacus sed viverra tellus',
+          contents: 'Massa placerat duis ultricies lacus. Enim nec dui nunc mattis',
           archived: false),
       Note(
           id: '1',
-          title: 'Do or learn something 2',
-          contents: 'and don\'t forget to delete it later',
-          archived: false)
+          title: 'Excepteur sint occaecat cupidatat non proident',
+          contents: 'sunt in culpa qui officia deserunt mollit anim id est laborum',
+          archived: false),
+      Note(
+          id: '4',
+          title: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit,'
+              ' sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+          contents: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco '
+              'laboris nisi ut aliquip ex ea commodo consequat',
+          archived: false),
+      Note(
+          id: '5',
+          title: 'Duis aute irure dolor in reprehenderit ',
+          contents: 'in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+          archived: false),
+      Note(
+          id: '6',
+          title: 'At varius vel pharetra vel turpis nunc eget lorem',
+          contents: 'Dolor morbi non arcu risus quis varius.',
+          archived: true)
     ],
     '1': [
       Note(
