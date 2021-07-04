@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mynotes/common/widgets/conditional_widget.dart';
+import 'package:proviso/proviso.dart';
 
 class AddNewNoteCard extends StatefulWidget {
   final Function(String, String) onAddNote;
@@ -58,9 +58,9 @@ class _AddNewNoteCardState extends State<AddNewNoteCard> {
                   },
                 ),
                 SizedBox(height: 5),
-                ConditionalWidget(
+                ConditionWidget(
                     fallback: Container(width: 200),
-                    child: TextFormField(
+                    widget: TextFormField(
                       autocorrect: false,
                       controller: _contentsController,
                       maxLines: 2,
@@ -72,9 +72,9 @@ class _AddNewNoteCardState extends State<AddNewNoteCard> {
                       },
                     ),
                     condition: buttonEnabled),
-                ConditionalWidget(
+                ConditionWidget(
                     fallback: Container(width: 200),
-                    child: IconButton(
+                    widget: IconButton(
                       icon: const Icon(Icons.add),
                       tooltip: "Add",
                       onPressed: () async => {

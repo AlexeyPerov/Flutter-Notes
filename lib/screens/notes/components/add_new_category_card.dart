@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:mynotes/common/widgets/conditional_widget.dart';
+import 'package:proviso/proviso.dart';
 
 class AddNewCategoryCard extends StatefulWidget {
   final Function(String) onAddCategory;
@@ -65,8 +65,8 @@ class _AddNewCategoryCardState extends State<AddNewCategoryCard> {
             ),
             Align(
               alignment: Alignment.center,
-              child: ConditionalWidget(
-                  child: _addButton(textTheme, colorScheme),
+              child: ConditionWidget(
+                  widget: _addButton(textTheme, colorScheme),
                   condition: buttonEnabled),
             )
           ],

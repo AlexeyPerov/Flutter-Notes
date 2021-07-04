@@ -17,6 +17,8 @@ dependencies:
 
   async_redux: ^6.0.3
 
+  proviso: ^1.0.2
+
   darq: ^0.4.0+1
 
   get_it: ^5.0.3
@@ -36,5 +38,4 @@ dev_dependencies:
     sdk: flutter
 
 flutter:
-
   uses-material-design: true

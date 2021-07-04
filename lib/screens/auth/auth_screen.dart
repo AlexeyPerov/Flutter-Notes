@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mynotes/app/theme/theme_constants.dart';
 import 'package:mynotes/common/utilities/navigator_utilities.dart';
-import 'package:mynotes/common/widgets/conditional_widget.dart';
 import 'package:mynotes/screens/error/error_screen.dart';
 import 'package:mynotes/screens/notes/notes_connector.dart';
+import 'package:proviso/proviso.dart';
 
 // TODO this is a stub for future auth implementation
 class AuthScreen extends StatefulWidget {
@@ -62,8 +62,8 @@ class _AuthScreenState extends State<AuthScreen> {
                     ),
                     Align(
                       alignment: Alignment.center,
-                      child: ConditionalWidget(
-                          child: _loginButton(context, textTheme, colorScheme),
+                      child: ConditionWidget(
+                          widget: _loginButton(context, textTheme, colorScheme),
                           condition: buttonEnabled),
                     )
                   ],
